@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .  # This tells Docker to build from the Dockerfile in the same directory
+      dockerfile: Dockerfile.dev  # Specify the correct Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules  # Prevents overwriting node_modules
+    #command: ["npm", "run", "dev"]  # Ensures live reload with nodemon
+  tests:
+    build:
+      context: .  # This tells Docker to build from the Dockerfile in the same directory
+      dockerfile: Dockerfile.dev  # Specify the correct Dockerfile
+    volumes:
+      - .:/app
+      - /app/node_modules  # Prevents overwriting node_modules
+    command: ["npm", "run", "test"]
