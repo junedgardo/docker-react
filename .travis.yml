@@ -7,3 +7,21 @@ before_install:
 
 script:
   - docker run eggjr/docker-react npm run test -- --coverage
+
+before_deploy:
+  - pip install --user awscli  # Install AWS CLI if not available
+  - export AWS_REGION=$(aws configure get region)  # Retrieve AWS region dynamically
+  - echo "Deploying to AWS Region: $AWS_REGION"
+
+deploy:
+  provider: elasticbeanstalk
+  region: $AWS_REGION  # Use the retrieved AWS region
+  app: "docker"
+  env: "Docker-env"
+  bucket_name: "elasticbeanstalk-$AWS_REGION-160885253404"
+  bucket_path: "docker"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_ACCESS_KEY"
