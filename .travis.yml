@@ -18,7 +18,7 @@ deploy:
   region: "ap-southeast-2"  # Replace with your actual AWS region if different
   app: "docker"
   env: "Docker-env"
-  bucket_name: "elasticbeanstalk-us-east-1-160885253404"
+  bucket_name: "elasticbeanstalk-ap-southeast-2-160885253404"
   bucket_path: "docker"
   on:
     branch: master
