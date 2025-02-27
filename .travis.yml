@@ -9,9 +9,9 @@ script:
   - docker run -e CI=true eggjr/docker-react npm run test -- --coverage
 
 before_deploy:
-  - pip install --user awscli  # Install AWS CLI if not available
-  - export AWS_REGION="ap-southeast-2"  # Manually set AWS region (or replace with your region)
-  - echo "Deploying to AWS Region: $AWS_REGION"
+  - pip install --user awscli  # Install AWS CLI
+  - export AWS_REGION="ap-southeast-2"  # Set AWS region manually
+  - echo "Deploying to AWS Region: $AWS_REGION"  # Print for debugging
 
 deploy:
   provider: elasticbeanstalk
@@ -23,4 +23,4 @@ deploy:
   on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY  # Corrected variable name
-  secret_access_key: $AWS_SECRET_ACCESS_KEY  # Corrected and removed "secure"
+  secret_access_key: $AWS_SECRET_KEY  # Corrected and removed "secure"
