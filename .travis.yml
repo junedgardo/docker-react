@@ -8,13 +8,9 @@ before_install:
 script:
   - docker run -e CI=true eggjr/docker-react npm run test -- --coverage
 
-before_deploy:
-  - pip install --user awscli  # Install AWS CLI
-  - export AWS_REGION="ap-southeast-2"  # Set AWS region manually
-  - echo "Deploying to AWS Region: $AWS_REGION"  # Print for debugging
-
 deploy:
   provider: elasticbeanstalk
+  edge: true  # Use latest Travis CI deployment features
   region: "ap-southeast-2"  # Replace with your actual AWS region if different
   app: "docker"
   env: "Docker-env"
