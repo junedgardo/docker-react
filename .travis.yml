@@ -6,22 +6,21 @@ before_install:
   - docker build -t eggjr/docker-react -f Dockerfile.dev .
 
 script:
-  - docker run eggjr/docker-react npm run test -- --coverage
+  - docker run -e CI=true eggjr/docker-react npm run test -- --coverage
 
 before_deploy:
   - pip install --user awscli  # Install AWS CLI if not available
-  - export AWS_REGION=$(aws configure get region)  # Retrieve AWS region dynamically
+  - export AWS_REGION="ap-southeast-2"  # Manually set AWS region (or replace with your region)
   - echo "Deploying to AWS Region: $AWS_REGION"
 
 deploy:
   provider: elasticbeanstalk
-  region: $AWS_REGION  # Use the retrieved AWS region
+  region: "ap-southeast-2"  # Replace with your actual AWS region if different
   app: "docker"
   env: "Docker-env"
-  bucket_name: "elasticbeanstalk-$AWS_REGION-160885253404"
+  bucket_name: "elasticbeanstalk-us-east-1-160885253404"
   bucket_path: "docker"
   on:
     branch: master
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key:
-    secure: "$AWS_SECRET_ACCESS_KEY"
+  access_key_id: $AWS_ACCESS_KEY_ID  # Corrected variable name
+  secret_access_key: $AWS_SECRET_ACCESS_KEY  # Corrected and removed "secure"
