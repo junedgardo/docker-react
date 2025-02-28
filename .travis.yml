@@ -14,7 +14,7 @@ deploy:
   #edge: true  # Use latest Travis CI deployment features
   region: "ap-southeast-2"  # Replace with your actual AWS region if different
   app: "docker"
-  env: "Docker-env"
+  env: "docker-env"
   bucket_name: "elasticbeanstalk-ap-southeast-2-160885253404"
   bucket_path: "docker"
   on:
